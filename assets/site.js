@@ -11,10 +11,10 @@
 
   /* ---- nav model ---- */
   var NAV = [
-    { label:'About Us', href:'about.html', page:'about', sub:[
+    { label:'About', href:'about.html', page:'about', sub:[
       ['Who We Are','about.html#who-we-are'],['Our Mission','about.html#mission'],['How We Work','about.html#how-we-work'],
       ['Our Leadership','about.html#leadership'],['Our Base','about.html#base'],['Press Information','about.html#press'] ] },
-    { label:'Our Issues', href:'issues.html', page:'issues' },
+    { label:'Issues', href:'issues.html', page:'issues' },
     { label:'Publications', href:'publications.html', page:'publications', sub:[
       ['Policy Briefs','publications.html#policy-briefs'],['Annual Reports','publications.html#annual-reports'],
       ['News','publications.html#news'],['Stories','publications.html#stories'] ] },
@@ -74,7 +74,7 @@
     return '<footer class="ft"><div class="wrap"><div class="ft__top">'
       + '<div class="ft__brand">'+brandHTML('mark-footer')+'<p class="blurb">Building political power and influence that advance inclusive economic growth, opportunity, and prosperity for all Michiganders.</p></div>'
       + '<div class="ftcol"><h4>About</h4><a href="about.html#who-we-are">Who We Are</a><a href="about.html#mission">Our Mission</a><a href="about.html#leadership">Leadership</a><a href="about.html#press">Press</a></div>'
-      + '<div class="ftcol"><h4>Our Work</h4><a href="issues.html">Our Issues</a><a href="scorecards.html">Scorecards</a><a href="candidates.html">Candidates</a><a href="publications.html">Publications</a></div>'
+      + '<div class="ftcol"><h4>Our Work</h4><a href="issues.html">Issues</a><a href="scorecards.html">Scorecards</a><a href="candidates.html">Candidates</a><a href="publications.html">Publications</a></div>'
       + '<div class="ftcol"><h4>Get Involved</h4><a href="donate.html">Donate</a><a href="events.html">Events</a><a href="about.html#base">Our Base</a></div>'
       + '<div class="ftcol"><h4>Connect</h4><p>123 W. Allegan St., Suite 1000<br/>Lansing, MI 48933</p><a href="mailto:info@mepac.org">info@mepac.org</a><a href="tel:5175550123">517-555-0123</a>'
       + '<div class="ft__social" aria-label="Social media">'+social+'</div></div>'
