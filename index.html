@@ -697,9 +697,28 @@
     requestAnimationFrame(step);
   }
   var counters = document.querySelectorAll('[data-count]');
-  if(reduce || !('IntersectionObserver' in window)){ counters.forEach(animateCount); }
-  else { var cio = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ animateCount(e.target); cio.unobserve(e.target); } }); }, {threshold:.6});
-    counters.forEach(function(el){ cio.observe(el); }); }
+  var statsBand = document.querySelector('.why__stats');
+  if(reduce || !('IntersectionObserver' in window) || !statsBand){
+    counters.forEach(animateCount);
+  } else {
+    /* Replays the count-up, but only re-arms after the band has been fully
+       out of sight for ~2s — so a quick scroll past-and-back keeps the final
+       value and does NOT replay. */
+    var animatedNow = false, awayTimer = null, REARM_MS = 2000;
+    function runStats(){ counters.forEach(animateCount); animatedNow = true; }
+    function resetStats(){ counters.forEach(function(el){ el.textContent = '0'; }); animatedNow = false; }
+    var sio = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting){
+          if(animatedNow && !awayTimer){ awayTimer = setTimeout(function(){ resetStats(); awayTimer = null; }, REARM_MS); }
+        } else {
+          if(awayTimer){ clearTimeout(awayTimer); awayTimer = null; }   /* came back quickly → keep final */
+          if(e.intersectionRatio >= 0.4 && !animatedNow){ runStats(); }
+        }
+      });
+    }, {threshold:[0, 0.4]});
+    sio.observe(statsBand);
+  }
 
   /* ---------- "The Case": full-bleed, scroll-driven active step ---------- */
   var caseEl = document.querySelector('.case');
