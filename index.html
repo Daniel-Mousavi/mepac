@@ -341,8 +341,13 @@
     .case__steps .st-n{ color:var(--gold-bright) !important; }
     .case__steps .desc{ max-height:none !important; opacity:1 !important; margin-top:11px !important; }
   }
+  @media (max-width:1080px){ nav.links{ display:none; } .menu-btn{ display:inline-flex; } }
+  .mobile-menu{ position:fixed; inset:0; z-index:55; background:var(--navy-deep); padding:96px var(--gutter) 40px; overflow-y:auto; transform:translateY(-12px); opacity:0; visibility:hidden; transition:opacity .3s var(--ease), transform .3s var(--ease), visibility .3s; }
+  .mobile-menu.open{ opacity:1; visibility:visible; transform:none; }
+  .mobile-menu a{ display:block; color:#fff; font-weight:800; font-size:24px; letter-spacing:-.02em; padding:13px 0; border-bottom:1px solid rgba(255,255,255,.12); }
+  .mobile-close{ position:absolute; top:22px; right:var(--gutter); background:none; border:1px solid rgba(255,255,255,.4); color:#fff; padding:10px; border-radius:var(--radius); cursor:pointer; line-height:0; }
   @media (max-width:680px){
-    nav.links, .nav__cta .btn{ display:none; } .menu-btn{ display:inline-flex; }
+    .nav__cta .btn{ display:none; }
     .pillar-grid{ grid-template-columns:1fr; } .people-grid{ grid-template-columns:1fr 1fr; }
     .why__stats{ grid-template-columns:1fr 1fr; } .join__row{ flex-direction:column; }
     .ft__top{ grid-template-columns:1fr 1fr; }
@@ -377,11 +382,12 @@
       </span>
     </a>
     <nav class="links" aria-label="Primary">
-      <a class="lnk" href="#about" data-i18n="nav.about">About</a>
-      <a class="lnk" href="#priorities" data-i18n="nav.priorities">Priorities</a>
-      <a class="lnk" href="#leadership" data-i18n="nav.leadership">Leadership</a>
-      <a class="lnk" href="#news" data-i18n="nav.news">News</a>
-      <a class="lnk" href="#join" data-i18n="nav.getinvolved">Get Involved</a>
+      <a class="lnk" href="about.html" data-i18n="nav.about">About Us</a>
+      <a class="lnk" href="issues.html" data-i18n="nav.issues">Our Issues</a>
+      <a class="lnk" href="publications.html" data-i18n="nav.publications">Publications</a>
+      <a class="lnk" href="events.html" data-i18n="nav.events">Events</a>
+      <a class="lnk" href="scorecards.html" data-i18n="nav.scorecards">Scorecards</a>
+      <a class="lnk" href="candidates.html" data-i18n="nav.candidates">Candidates</a>
     </nav>
     <div class="nav__cta">
       <div class="lang-switch" role="group" aria-label="Select language">
@@ -389,13 +395,24 @@
         <button type="button" data-lang="es">ES</button>
         <button type="button" data-lang="ar">ع</button>
       </div>
-      <a class="btn btn--gold" href="#join" data-i18n="nav.donate">Donate</a>
+      <a class="btn btn--gold" href="donate.html" data-i18n="nav.donate">Donate</a>
       <button class="menu-btn" aria-label="Open menu">
         <svg width="20" height="14" viewBox="0 0 20 14" fill="none"><path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" stroke-width="1.6"/></svg>
       </button>
     </div>
   </div>
 </header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" aria-label="Close menu"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M1 1l18 18M19 1L1 19" stroke="currentColor" stroke-width="1.7"/></svg></button>
+  <a href="about.html" data-i18n="nav.about">About Us</a>
+  <a href="issues.html" data-i18n="nav.issues">Our Issues</a>
+  <a href="publications.html" data-i18n="nav.publications">Publications</a>
+  <a href="events.html" data-i18n="nav.events">Events</a>
+  <a href="scorecards.html" data-i18n="nav.scorecards">Scorecards</a>
+  <a href="candidates.html" data-i18n="nav.candidates">Candidates</a>
+  <a href="donate.html" data-i18n="nav.donate">Donate</a>
+</div>
 
 <!-- ===================== HERO (static photo) ===================== -->
 <section class="hero">
@@ -410,8 +427,8 @@
     <div class="hero__gold-rule reveal d1"></div>
     <p class="hero__sub reveal d2" data-i18n="hero.sub">Globalizing Michigan. Supporting our diverse business and civic community. Ensuring the people who shape our economy, build our neighborhoods, and invest in our future are represented at every level of government.</p>
     <div class="hero__btns reveal d3">
-      <a class="btn btn--teal" href="#join"><span data-i18n="hero.btn1">Support the PAC</span> <span class="arw">&rarr;</span></a>
-      <a class="btn btn--ghost-light" href="#priorities" data-i18n="hero.btn2">Get Involved</a>
+      <a class="btn btn--teal" href="donate.html"><span data-i18n="hero.btn1">Support the PAC</span> <span class="arw">&rarr;</span></a>
+      <a class="btn btn--ghost-light" href="about.html#base" data-i18n="hero.btn2">Get Involved</a>
     </div>
   </div>
   <span class="scroll-cue" aria-hidden="true"></span>
@@ -581,7 +598,7 @@
   <div class="wrap">
     <div class="sec-head between reveal">
       <h2 data-i18n="news.h2">News &amp; Updates</h2>
-      <a class="news__viewall" href="#news"><span data-i18n="news.viewall">View all news</span> <span class="arw">&rarr;</span></a>
+      <a class="news__viewall" href="publications.html#news"><span data-i18n="news.viewall">View all news</span> <span class="arw">&rarr;</span></a>
     </div>
     <div class="news-grid">
       <article class="card reveal">
@@ -640,9 +657,9 @@
         </a>
         <p class="blurb" data-i18n="footer.blurb">Building political power and influence that advance inclusive economic growth, opportunity, and prosperity for all Michiganders.</p>
       </div>
-      <div class="ftcol"><h4 data-i18n="footer.about">About</h4><a href="#about" data-i18n="footer.mission">Our Mission</a><a href="#about" data-i18n="footer.vision">Our Vision</a><a href="#leadership" data-i18n="nav.leadership">Leadership</a></div>
-      <div class="ftcol"><h4 data-i18n="footer.priorities">Priorities</h4><a href="#priorities" data-i18n="footer.focus">Our Focus Areas</a><a href="#leadership" data-i18n="footer.endorse">Endorsements</a><a href="#priorities" data-i18n="footer.policy">Policy Principles</a></div>
-      <div class="ftcol"><h4 data-i18n="footer.getinvolved">Get Involved</h4><a href="#join" data-i18n="footer.volunteer">Volunteer</a><a href="#join" data-i18n="footer.host">Host an Event</a><a href="#join" data-i18n="footer.partner">Partner With Us</a></div>
+      <div class="ftcol"><h4 data-i18n="footer.about">About</h4><a href="about.html#mission" data-i18n="footer.mission">Our Mission</a><a href="about.html#mission" data-i18n="footer.vision">Our Vision</a><a href="about.html#leadership" data-i18n="nav.leadership">Leadership</a></div>
+      <div class="ftcol"><h4 data-i18n="footer.priorities">Priorities</h4><a href="issues.html" data-i18n="footer.focus">Our Focus Areas</a><a href="candidates.html#endorsed" data-i18n="footer.endorse">Endorsements</a><a href="issues.html" data-i18n="footer.policy">Policy Principles</a></div>
+      <div class="ftcol"><h4 data-i18n="footer.getinvolved">Get Involved</h4><a href="about.html#base" data-i18n="footer.volunteer">Volunteer</a><a href="events.html" data-i18n="footer.host">Host an Event</a><a href="about.html#base" data-i18n="footer.partner">Partner With Us</a></div>
       <div class="ftcol"><h4 data-i18n="footer.connect">Connect</h4>
         <p>123 W. Allegan St., Suite 1000<br/>Lansing, MI 48933</p>
         <a href="mailto:info@mepac.org">info@mepac.org</a>
@@ -769,7 +786,7 @@
   /* ===================== EN / AR (RTL) TOGGLE ===================== */
   var I18N = { en:{},
     es:{
-      "nav.about":"Nosotros","nav.priorities":"Prioridades","nav.leadership":"Liderazgo","nav.news":"Noticias","nav.getinvolved":"Participa","nav.donate":"Donar",
+      "nav.about":"Nosotros","nav.priorities":"Prioridades","nav.leadership":"Liderazgo","nav.news":"Noticias","nav.getinvolved":"Participa","nav.donate":"Donar","nav.issues":"Temas","nav.publications":"Publicaciones","nav.events":"Eventos","nav.scorecards":"Calificaciones","nav.candidates":"Candidatos",
       "hero.eyebrow":"PAC de Empoderamiento Económico de Michigan",
       "hero.h1":"Construyendo poder político para el <span class=\"accent\">futuro económico de Michigan</span>.",
       "hero.sub":"Globalizando Michigan. Apoyando a nuestra diversa comunidad empresarial y cívica. Garantizando que las personas que dan forma a nuestra economía, construyen nuestros vecindarios e invierten en nuestro futuro estén representadas en todos los niveles del gobierno.",
@@ -810,7 +827,7 @@
       "footer.disclaimer":"Pagado por Michigan Economic Empowerment PAC. No autorizado por ningún candidato ni comité de candidato.","footer.rights":"© 2025 Michigan Economic Empowerment PAC. Todos los derechos reservados."
     },
     ar:{
-    "nav.about":"نبذة عنا","nav.priorities":"أولوياتنا","nav.leadership":"القيادة","nav.news":"الأخبار","nav.getinvolved":"شارك معنا","nav.donate":"تبرّع",
+    "nav.about":"نبذة عنا","nav.priorities":"أولوياتنا","nav.leadership":"القيادة","nav.news":"الأخبار","nav.getinvolved":"شارك معنا","nav.donate":"تبرّع","nav.issues":"قضايانا","nav.publications":"المنشورات","nav.events":"الفعاليات","nav.scorecards":"التقييمات","nav.candidates":"المرشحون",
     "hero.eyebrow":"لجنة العمل السياسي للتمكين الاقتصادي في ميشيغان",
     "hero.h1":"نبني القوة السياسية من أجل <span class=\"accent\">مستقبل ميشيغان الاقتصادي</span>.",
     "hero.sub":"عَولمة ميشيغان. دعم مجتمعنا التجاري والمدني المتنوّع. وضمان تمثيل الأشخاص الذين يصنعون اقتصادنا، ويبنون أحياءنا، ويستثمرون في مستقبلنا على كل مستويات الحكومة.",
@@ -876,6 +893,14 @@
     switchBtns.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-lang') === l); });
   }
   switchBtns.forEach(function(b){ b.addEventListener('click', function(){ setLang(b.getAttribute('data-lang')); }); });
+
+  /* mobile menu */
+  var _mb=document.querySelector('.menu-btn'), _mm=document.getElementById('mobileMenu'), _mc=document.getElementById('mobileClose');
+  function _openMenu(o){ if(!_mm) return; _mm.classList.toggle('open', o); document.body.style.overflow=o?'hidden':''; }
+  if(_mb) _mb.addEventListener('click', function(){ _openMenu(!_mm.classList.contains('open')); });
+  if(_mc) _mc.addEventListener('click', function(){ _openMenu(false); });
+  if(_mm) _mm.addEventListener('click', function(e){ if(e.target.tagName==='A') _openMenu(false); });
+  window.addEventListener('keydown', function(e){ if(e.key==='Escape') _openMenu(false); });
 })();
 </script>
 </body>

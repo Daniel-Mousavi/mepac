@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Donate — Michigan Economic Empowerment PAC</title>
+<meta name="description" content="Support the Michigan Economic Empowerment PAC and help build political power for Michigan's economic future." />
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  .give{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(36px,5vw,72px); align-items:start; }
+  .give__form{ background:#fff; border:1px solid var(--line); padding:clamp(28px,3vw,44px); box-shadow:0 30px 60px -44px rgba(19,31,51,.5); }
+  .freq{ display:flex; border:1.5px solid var(--line); margin-bottom:22px; }
+  .freq button{ flex:1; background:none; border:0; padding:14px; font-family:var(--font); font-weight:700; font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--slate); cursor:pointer; transition:all .2s var(--ease); }
+  .freq button.sel{ background:var(--navy); color:#fff; }
+  @media(max-width:860px){ .give{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body data-page="donate">
+<main id="main">
+
+  <section class="page-hero">
+    <div class="page-hero__bg" aria-hidden="true"><img src="assets/img/split-capitol.jpg" alt="" /></div>
+    <div class="page-hero__scrim" aria-hidden="true"></div>
+    <div class="wrap page-hero__in">
+      <p class="crumb"><a href="index.html">Home</a> / Donate</p>
+      <h1>Put power behind the agenda.</h1>
+      <p class="lede">Every contribution helps elect pro-growth leaders, hold them accountable, and build a Michigan where everyone can build.</p>
+      <div class="page-hero__gold"></div>
+    </div>
+  </section>
+
+  <section class="section section--mist">
+    <div class="wrap give">
+      <div class="reveal">
+        <p class="eyebrow eyebrow--bare">Why Give</p>
+        <h2 style="font-size:clamp(26px,3vw,40px); letter-spacing:-.03em;">Your contribution is political power.</h2>
+        <div class="prose" style="margin-top:22px;">
+          <p>We don’t take this lightly. Your support funds endorsements, voter education, scorecards, and the organizing that turns Michigan’s builders into a constituency politicians can’t ignore.</p>
+        </div>
+        <ul class="issue__list" style="margin-top:24px; max-width:42ch;">
+          <li>Back pro-growth candidates across Michigan.</li>
+          <li>Publish the scorecards that hold lawmakers accountable.</li>
+          <li>Organize small business owners and community leaders.</li>
+        </ul>
+      </div>
+
+      <form class="give__form reveal d1" onsubmit="return false;" aria-label="Donation">
+        <div class="freq" role="group" aria-label="Frequency">
+          <button type="button" class="sel" data-freq="once">One-time</button>
+          <button type="button" data-freq="monthly">Monthly</button>
+        </div>
+        <div class="donate-grid">
+          <button type="button" class="amount">$25</button>
+          <button type="button" class="amount sel">$50</button>
+          <button type="button" class="amount">$100</button>
+          <button type="button" class="amount">$250</button>
+          <button type="button" class="amount">$500</button>
+          <button type="button" class="amount">$1,000</button>
+          <button type="button" class="amount" style="grid-column:span 2;">Other amount</button>
+        </div>
+        <a class="btn btn--gold" href="#" style="width:100%; justify-content:center; margin-top:20px;">Donate <span class="arw">&rarr;</span></a>
+        <!-- TODO: connect a compliant donation processor (ActBlue / Anedot / WinRed) and confirm limits + disclaimer with counsel. -->
+        <p class="donate-note">Contributions to Michigan Economic Empowerment PAC are not tax-deductible. Paid for by Michigan Economic Empowerment PAC. Not authorized by any candidate or candidate’s committee. <em>Secure processing and exact contribution limits will be connected before launch.</em></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+<script src="assets/site.js"></script>
+<script>
+  (function(){
+    document.querySelectorAll('.donate-grid .amount').forEach(function(b){
+      b.addEventListener('click', function(){ document.querySelectorAll('.donate-grid .amount').forEach(function(x){ x.classList.remove('sel'); }); b.classList.add('sel'); });
+    });
+    document.querySelectorAll('.freq button').forEach(function(b){
+      b.addEventListener('click', function(){ document.querySelectorAll('.freq button').forEach(function(x){ x.classList.remove('sel'); }); b.classList.add('sel'); });
+    });
+  })();
+</script>
+</body>
+</html>
