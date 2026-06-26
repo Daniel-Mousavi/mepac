@@ -115,11 +115,16 @@
   header.nav:not(.solid) nav.links a.lnk::after{ background:var(--teal-bright); }
   nav.links a.lnk:hover{ opacity:1; } nav.links a.lnk:hover::after{ width:100%; }
   .nav__cta{ display:flex; align-items:center; gap:16px; }
-  .lang-btn{ background:none; border:1px solid rgba(255,255,255,.4); color:#fff; font-family:var(--font); font-size:12px; font-weight:700; letter-spacing:.08em;
-    padding:9px 13px; border-radius:var(--radius); cursor:pointer; transition:color .3s var(--ease),border-color .3s var(--ease),background .2s; }
-  .lang-btn:hover{ background:rgba(255,255,255,.12); }
-  header.nav.solid .lang-btn{ border-color:var(--line); color:var(--ink); }
-  body.rtl .lang-btn{ font-family:var(--font-ar); }
+  .lang-switch{ display:flex; align-items:stretch; border:1px solid rgba(255,255,255,.4); border-radius:var(--radius); overflow:hidden; transition:border-color .3s var(--ease); }
+  .lang-switch button{ background:none; border:0; color:#fff; font-family:var(--font); font-size:11.5px; font-weight:700; letter-spacing:.06em; padding:8px 11px; cursor:pointer; line-height:1; transition:background .2s var(--ease), color .2s var(--ease); }
+  .lang-switch button + button{ border-inline-start:1px solid rgba(255,255,255,.25); }
+  .lang-switch button:hover{ background:rgba(255,255,255,.12); }
+  .lang-switch button.active{ background:var(--teal); color:#fff; }
+  .lang-switch button[data-lang="ar"]{ font-family:var(--font-ar); font-size:13px; }
+  header.nav.solid .lang-switch{ border-color:var(--line); }
+  header.nav.solid .lang-switch button{ color:var(--ink); }
+  header.nav.solid .lang-switch button + button{ border-inline-start-color:var(--line); }
+  header.nav.solid .lang-switch button.active{ background:var(--teal); color:#fff; }
   .menu-btn{ display:none; background:none; border:1px solid rgba(255,255,255,.4); color:#fff; padding:9px; border-radius:var(--radius); cursor:pointer; transition:color .3s var(--ease),border-color .3s var(--ease); }
   header.nav.solid .menu-btn{ border-color:var(--line); color:var(--ink); }
 
@@ -379,7 +384,11 @@
       <a class="lnk" href="#join" data-i18n="nav.getinvolved">Get Involved</a>
     </nav>
     <div class="nav__cta">
-      <button class="lang-btn" id="langBtn" aria-label="Switch language">العربية</button>
+      <div class="lang-switch" role="group" aria-label="Select language">
+        <button type="button" data-lang="en" class="active">EN</button>
+        <button type="button" data-lang="es">ES</button>
+        <button type="button" data-lang="ar">ع</button>
+      </div>
       <a class="btn btn--gold" href="#join" data-i18n="nav.donate">Donate</a>
       <button class="menu-btn" aria-label="Open menu">
         <svg width="20" height="14" viewBox="0 0 20 14" fill="none"><path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" stroke-width="1.6"/></svg>
@@ -500,7 +509,7 @@
         <div class="stat reveal"><div class="stat__num" data-count data-to="2.1" data-decimals="1" data-suffix="M+">0</div><div class="stat__lbl" data-i18n="why.s1">Jobs supported by small businesses across Michigan.</div></div>
         <div class="stat reveal d1"><div class="stat__num" data-count data-to="85" data-prefix="$" data-suffix="B+">0</div><div class="stat__lbl" data-i18n="why.s2">In global exports from Michigan businesses.</div></div>
         <div class="stat reveal d2"><div class="stat__num" data-count data-to="36" data-suffix="%">0</div><div class="stat__lbl" data-i18n="why.s3">Of Michiganders identify as part of a historically underrepresented group.</div></div>
-        <div class="stat reveal d3"><div class="stat__num">Top&nbsp;10</div><div class="stat__lbl" data-i18n="why.s4">Michigan&rsquo;s global competitiveness ranking worldwide.</div></div>
+        <div class="stat reveal d3"><div class="stat__num" data-i18n="why.top">Top&nbsp;10</div><div class="stat__lbl" data-i18n="why.s4">Michigan&rsquo;s global competitiveness ranking worldwide.</div></div>
       </div>
     </div>
     <!-- TODO before publishing: source/verify each figure (BLS, MEDC, U.S. Census) and cite here. -->
@@ -524,22 +533,22 @@
         <h2 data-i18n="case.h2">Why we build power.</h2>
         <ol class="case__steps" id="caseSteps">
           <li data-step="1" class="active">
-            <span class="st-n">01</span>
+            <span class="st-n" data-i18n="cn.1">01</span>
             <div class="case__txt"><span class="lbl" data-i18n="case.s1">Power lives where decisions are made</span>
               <p class="desc" data-i18n="case.p1.d">We back leaders at every level, from city hall to Lansing to Washington, so Michigan&rsquo;s economy has a seat at every table.</p></div>
           </li>
           <li data-step="2">
-            <span class="st-n">02</span>
+            <span class="st-n" data-i18n="cn.2">02</span>
             <div class="case__txt"><span class="lbl" data-i18n="case.s2">Michigan&rsquo;s future is global</span>
               <p class="desc" data-i18n="case.p2.d">We champion the trade, talent, and investment that connect our communities to the world.</p></div>
           </li>
           <li data-step="3">
-            <span class="st-n">03</span>
+            <span class="st-n" data-i18n="cn.3">03</span>
             <div class="case__txt"><span class="lbl" data-i18n="case.s3">Opportunity must reach every community</span>
               <p class="desc" data-i18n="case.p3.d">From Detroit to Grand Rapids, we invest in the neighborhoods and small businesses that power the state.</p></div>
           </li>
           <li data-step="4">
-            <span class="st-n">04</span>
+            <span class="st-n" data-i18n="cn.4">04</span>
             <div class="case__txt"><span class="lbl" data-i18n="case.s4">Representation changes outcomes</span>
               <p class="desc" data-i18n="case.p4.d">When the people who build our economy help shape its policies, everyone does better.</p></div>
           </li>
@@ -577,15 +586,15 @@
     <div class="news-grid">
       <article class="card reveal">
         <div class="card__media"><span class="card__wipe"></span><div class="duo duo--soft"><img src="assets/img/news-trade.jpg" alt="The Ambassador Bridge connecting Detroit, Michigan to Windsor, Ontario." /></div></div>
-        <div class="card__body"><span class="card__date">May 8, 2025</span><h3 data-i18n="n1.title">Global Connections, Local Impact: Michigan&rsquo;s Economic Moment</h3><p data-i18n="n1.dek">Why strengthening international partnerships means more jobs, investment, and opportunity for our communities.</p><a class="card__more" href="#news"><span data-i18n="news.read">Read more</span> <span class="arw">&rarr;</span></a></div>
+        <div class="card__body"><span class="card__date" data-i18n="n1.date">May 8, 2025</span><h3 data-i18n="n1.title">Global Connections, Local Impact: Michigan&rsquo;s Economic Moment</h3><p data-i18n="n1.dek">Why strengthening international partnerships means more jobs, investment, and opportunity for our communities.</p><a class="card__more" href="#news"><span data-i18n="news.read">Read more</span> <span class="arw">&rarr;</span></a></div>
       </article>
       <article class="card reveal d1">
         <div class="card__media"><span class="card__wipe"></span><div class="duo duo--soft"><img src="assets/img/news-smallbiz.jpg" alt="Detroit's historic Eastern Market, a hub for small business and local vendors." /></div></div>
-        <div class="card__body"><span class="card__date">April 22, 2025</span><h3 data-i18n="n2.title">Backing Michigan&rsquo;s Small Business Innovators</h3><p data-i18n="n2.dek">Our PAC is committed to policies that help entrepreneurs start, grow, and create lasting impact.</p><a class="card__more" href="#news"><span data-i18n="news.read">Read more</span> <span class="arw">&rarr;</span></a></div>
+        <div class="card__body"><span class="card__date" data-i18n="n2.date">April 22, 2025</span><h3 data-i18n="n2.title">Backing Michigan&rsquo;s Small Business Innovators</h3><p data-i18n="n2.dek">Our PAC is committed to policies that help entrepreneurs start, grow, and create lasting impact.</p><a class="card__more" href="#news"><span data-i18n="news.read">Read more</span> <span class="arw">&rarr;</span></a></div>
       </article>
       <article class="card reveal d2">
         <div class="card__media"><span class="card__wipe"></span><div class="duo duo--soft"><img src="assets/img/news-voices.jpg" alt="A diverse crowd of shoppers and vendors inside Detroit's Eastern Market." /></div></div>
-        <div class="card__body"><span class="card__date">March 31, 2025</span><h3 data-i18n="n3.title">Voices That Build Our Future</h3><p data-i18n="n3.dek">Representation matters. Learn how diverse leadership leads to better outcomes for Michigan&rsquo;s families and neighborhoods.</p><a class="card__more" href="#news"><span data-i18n="news.read">Read more</span> <span class="arw">&rarr;</span></a></div>
+        <div class="card__body"><span class="card__date" data-i18n="n3.date">March 31, 2025</span><h3 data-i18n="n3.title">Voices That Build Our Future</h3><p data-i18n="n3.dek">Representation matters. Learn how diverse leadership leads to better outcomes for Michigan&rsquo;s families and neighborhoods.</p><a class="card__more" href="#news"><span data-i18n="news.read">Read more</span> <span class="arw">&rarr;</span></a></div>
       </article>
     </div>
   </div>
@@ -658,6 +667,7 @@
 (function(){
   "use strict";
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var lang = 'en';
 
   /* ---------- dot-mosaic logo (radial halftone) + staggered reveal ---------- */
   function buildMark(el, palette, animate){
@@ -693,34 +703,42 @@
   else { var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:.15});
     revs.forEach(function(el){ io.observe(el); }); }
 
-  /* ---------- count-up stats ---------- */
-  function animateCount(el){
-    var to = parseFloat(el.getAttribute('data-to')), dec = parseInt(el.getAttribute('data-decimals')||'0',10);
-    var pre = el.getAttribute('data-prefix')||'', suf = el.getAttribute('data-suffix')||'';
-    if(reduce){ el.textContent = pre+to.toFixed(dec)+suf; return; }
-    var dur=1500, start=null;
-    function step(ts){ if(start===null)start=ts; var p=Math.min((ts-start)/dur,1); var e=1-Math.pow(1-p,3);
-      el.textContent = pre+(to*e).toFixed(dec)+suf; if(p<1) requestAnimationFrame(step); }
-    requestAnimationFrame(step);
-  }
+  /* ---------- count-up stats (locale-aware digits; replays after ~2s out of view) ---------- */
   var counters = document.querySelectorAll('[data-count]');
   var statsBand = document.querySelector('.why__stats');
+  var statsAtFinal = false;
+  function fmtCount(el, val){
+    var dec = parseInt(el.getAttribute('data-decimals')||'0',10);
+    var pre = el.getAttribute('data-prefix')||'', suf = el.getAttribute('data-suffix')||'';
+    var s = val.toFixed(dec);                       /* localise the numeric part only */
+    if(lang === 'es'){ s = s.replace('.', ','); }   /* Spanish decimal comma */
+    else if(lang === 'ar'){ s = s.replace(/[0-9]/g, function(d){ return '٠١٢٣٤٥٦٧٨٩'.charAt(+d); }).replace('.', '٫'); }
+    return pre + s + suf;
+  }
+  function animateCount(el){
+    var to = parseFloat(el.getAttribute('data-to'));
+    if(reduce){ el.textContent = fmtCount(el, to); return; }
+    var dur=1500, start=null;
+    function step(ts){ if(start===null)start=ts; var p=Math.min((ts-start)/dur,1); var e=1-Math.pow(1-p,3);
+      el.textContent = fmtCount(el, to*e); if(p<1) requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  }
+  function renderCounts(){ counters.forEach(function(el){ el.textContent = fmtCount(el, statsAtFinal ? parseFloat(el.getAttribute('data-to')) : 0); }); }
   if(reduce || !('IntersectionObserver' in window) || !statsBand){
-    counters.forEach(animateCount);
+    statsAtFinal = true; counters.forEach(animateCount);
   } else {
     /* Replays the count-up, but only re-arms after the band has been fully
-       out of sight for ~2s — so a quick scroll past-and-back keeps the final
-       value and does NOT replay. */
-    var animatedNow = false, awayTimer = null, REARM_MS = 2000;
-    function runStats(){ counters.forEach(animateCount); animatedNow = true; }
-    function resetStats(){ counters.forEach(function(el){ el.textContent = '0'; }); animatedNow = false; }
+       out of sight for ~2s — quick scroll past-and-back keeps the final value. */
+    var awayTimer = null, REARM_MS = 2000;
+    function runStats(){ counters.forEach(animateCount); statsAtFinal = true; }
+    function resetStats(){ statsAtFinal = false; renderCounts(); }
     var sio = new IntersectionObserver(function(es){
       es.forEach(function(e){
         if(!e.isIntersecting){
-          if(animatedNow && !awayTimer){ awayTimer = setTimeout(function(){ resetStats(); awayTimer = null; }, REARM_MS); }
+          if(statsAtFinal && !awayTimer){ awayTimer = setTimeout(function(){ resetStats(); awayTimer = null; }, REARM_MS); }
         } else {
           if(awayTimer){ clearTimeout(awayTimer); awayTimer = null; }   /* came back quickly → keep final */
-          if(e.intersectionRatio >= 0.4 && !animatedNow){ runStats(); }
+          if(e.intersectionRatio >= 0.4 && !statsAtFinal){ runStats(); }
         }
       });
     }, {threshold:[0, 0.4]});
@@ -749,7 +767,49 @@
   }
 
   /* ===================== EN / AR (RTL) TOGGLE ===================== */
-  var I18N = { en:{}, ar:{
+  var I18N = { en:{},
+    es:{
+      "nav.about":"Nosotros","nav.priorities":"Prioridades","nav.leadership":"Liderazgo","nav.news":"Noticias","nav.getinvolved":"Participa","nav.donate":"Donar",
+      "hero.eyebrow":"PAC de Empoderamiento Económico de Michigan",
+      "hero.h1":"Construyendo poder político para el <span class=\"accent\">futuro económico de Michigan</span>.",
+      "hero.sub":"Globalizando Michigan. Apoyando a nuestra diversa comunidad empresarial y cívica. Garantizando que las personas que dan forma a nuestra economía, construyen nuestros vecindarios e invierten en nuestro futuro estén representadas en todos los niveles del gobierno.",
+      "hero.btn1":"Apoya al PAC","hero.btn2":"Participa",
+      "mission.eyebrow":"Nuestra Misión","mission.h2":"Construir poder político e influencia que impulsen un crecimiento económico inclusivo, oportunidades y prosperidad para todos los habitantes de Michigan.",
+      "vision.eyebrow":"Nuestra Visión","vision.h2":"Un Michigan donde cada comunidad prospera en una economía global, y <span class=\"accent\">cada voz tiene un lugar en la mesa.</span>",
+      "pillars.eyebrow":"Lo Que Defendemos","pillars.h2":"Seis compromisos que guían cada respaldo, cada dólar y cada decisión.",
+      "p1.title":"Globalizando Michigan","p1.desc":"Conectando a las empresas y comunidades de Michigan con los mercados y oportunidades globales.","p1.tag":"Comercio y Mercados",
+      "p2.title":"Pequeñas Empresas y Emprendimiento","p2.desc":"Impulsando a los innovadores y creadores de empleo que mueven nuestra economía.","p2.tag":"Creación de Empleo",
+      "p3.title":"Acceso al Capital","p3.desc":"Ampliando las vías de financiamiento para empresas e iniciativas comunitarias.","p3.tag":"Inversión",
+      "p4.title":"Fuerza Laboral y Talento","p4.desc":"Invirtiendo en las personas y las vías para construir la fuerza laboral del futuro de Michigan.","p4.tag":"Talento",
+      "p5.title":"Inversión Comunitaria","p5.desc":"Fortaleciendo los vecindarios y la infraestructura para un impacto duradero.","p5.tag":"Vecindarios",
+      "p6.title":"Representación","p6.desc":"Garantizando que voces diversas den forma a políticas que reflejen nuestras comunidades y valores.","p6.tag":"Voz",
+      "split.eyebrow":"Globalizando Michigan","split.h2":"Donde Michigan se conecta con la <span class=\"accent\">economía global.</span>",
+      "split.p":"Desde el estrecho de Mackinac hasta los cruces del río Detroit, Michigan se construye sobre el movimiento de bienes, talento e ideas. Respaldamos a líderes que abren las puertas a los mercados internacionales y llevan esa oportunidad a cada comunidad.",
+      "split.statlabel":"en exportaciones globales de empresas de Michigan cada año.",
+      "why.eyebrow":"Por Qué Importa","why.h2":"Lo que está en juego es real.","why.lead":"Invertir en poder político crea mejores políticas, comunidades más fuertes y un Michigan más próspero para todos.",
+      "why.s1":"Empleos respaldados por pequeñas empresas en todo Michigan.","why.s2":"En exportaciones globales de empresas de Michigan.","why.s3":"De los habitantes de Michigan se identifican como parte de un grupo históricamente subrepresentado.","why.s4":"Clasificación de competitividad global de Michigan en el mundo.",
+      "why.src":"Fuentes que se finalizarán antes de la publicación.",
+      "case.eyebrow":"El Argumento","case.h2":"Por qué construimos poder.",
+      "case.s1":"El poder reside donde se toman las decisiones","case.s2":"El futuro de Michigan es global","case.s3":"La oportunidad debe llegar a cada comunidad","case.s4":"La representación cambia los resultados",
+      "case.p1.d":"Respaldamos a líderes en todos los niveles, desde el ayuntamiento hasta Lansing y Washington, para que la economía de Michigan tenga un lugar en cada mesa.",
+      "case.p2.d":"Defendemos el comercio, el talento y la inversión que conectan a nuestras comunidades con el mundo.",
+      "case.p3.d":"Desde Detroit hasta Grand Rapids, invertimos en los vecindarios y las pequeñas empresas que impulsan el estado.",
+      "case.p4.d":"Cuando las personas que construyen nuestra economía ayudan a dar forma a sus políticas, todos salimos ganando.",
+      "leadership.eyebrow":"Liderazgo","leadership.h2":"Las personas responsables de cada dólar.","leadership.p":"Una coalición de líderes empresariales, cívicos y comunitarios de todo Michigan. Nuestra lista completa de liderazgo se anunciará cuando se lance el comité.",
+      "role.chair":"Presidencia","role.treasurer":"Tesorería","role.board":"Miembro de la Junta","person.tba":"Por anunciar",
+      "person.b1":"Dirige la estrategia y la coalición del comité.","person.b2":"Responsable del cumplimiento y la transparencia financiera.","person.b3":"Representa a la comunidad empresarial de Michigan.","person.b4":"Representa a los socios cívicos y comunitarios de Michigan.",
+      "news.h2":"Noticias y Novedades","news.viewall":"Ver todas las noticias","news.read":"Leer más",
+      "n1.title":"Conexiones globales, impacto local: el momento económico de Michigan","n1.dek":"Por qué fortalecer las alianzas internacionales significa más empleos, inversión y oportunidades para nuestras comunidades.","n1.date":"8 de mayo de 2025",
+      "n2.title":"Apoyando a los innovadores de las pequeñas empresas de Michigan","n2.dek":"Nuestro PAC está comprometido con políticas que ayudan a los emprendedores a iniciar, crecer y generar un impacto duradero.","n2.date":"22 de abril de 2025",
+      "n3.title":"Voces que construyen nuestro futuro","n3.dek":"La representación importa. Descubre cómo un liderazgo diverso conduce a mejores resultados para las familias y los vecindarios de Michigan.","n3.date":"31 de marzo de 2025",
+      "join.eyebrow":"Únete al Movimiento","join.h2":"Mantente informado.<br/>Participa.<br/>Marca la diferencia.","join.sub":"Suma tu nombre y ayuda a construir poder político para el futuro económico de Michigan.",
+      "join.ph":"Introduce tu correo electrónico","join.btn":"Suscríbete","join.fine":"Respetamos tu privacidad. Cancela tu suscripción cuando quieras.",
+      "footer.blurb":"Construyendo poder político e influencia que impulsan un crecimiento económico inclusivo, oportunidades y prosperidad para todos los habitantes de Michigan.",
+      "footer.about":"Nosotros","footer.mission":"Nuestra Misión","footer.vision":"Nuestra Visión","footer.priorities":"Prioridades","footer.focus":"Nuestras Áreas de Enfoque","footer.endorse":"Respaldos","footer.policy":"Principios de Política",
+      "footer.getinvolved":"Participa","footer.volunteer":"Voluntariado","footer.host":"Organiza un Evento","footer.partner":"Colabora con Nosotros","footer.connect":"Contacto",
+      "footer.disclaimer":"Pagado por Michigan Economic Empowerment PAC. No autorizado por ningún candidato ni comité de candidato.","footer.rights":"© 2025 Michigan Economic Empowerment PAC. Todos los derechos reservados."
+    },
+    ar:{
     "nav.about":"نبذة عنا","nav.priorities":"أولوياتنا","nav.leadership":"القيادة","nav.news":"الأخبار","nav.getinvolved":"شارك معنا","nav.donate":"تبرّع",
     "hero.eyebrow":"لجنة العمل السياسي للتمكين الاقتصادي في ميشيغان",
     "hero.h1":"نبني القوة السياسية من أجل <span class=\"accent\">مستقبل ميشيغان الاقتصادي</span>.",
@@ -789,31 +849,33 @@
     "footer.about":"نبذة","footer.mission":"مهمتنا","footer.vision":"رؤيتنا","footer.priorities":"الأولويات","footer.focus":"مجالات تركيزنا","footer.endorse":"التأييدات","footer.policy":"مبادئ السياسات",
     "footer.getinvolved":"شارك معنا","footer.volunteer":"تطوّع","footer.host":"استضف فعالية","footer.partner":"اشترك معنا","footer.connect":"تواصل",
     "footer.disclaimer":"مموَّل من لجنة العمل السياسي للتمكين الاقتصادي في ميشيغان. غير مُصرَّحٍ به من أي مرشّح أو لجنة مرشّح.",
-    "footer.rights":"© 2025 لجنة العمل السياسي للتمكين الاقتصادي في ميشيغان. جميع الحقوق محفوظة."
+    "footer.rights":"© ٢٠٢٥ لجنة العمل السياسي للتمكين الاقتصادي في ميشيغان. جميع الحقوق محفوظة.",
+    "why.top":"الأفضل ١٠",
+    "cn.1":"٠١","cn.2":"٠٢","cn.3":"٠٣","cn.4":"٠٤",
+    "n1.date":"٨ مايو ٢٠٢٥","n2.date":"٢٢ أبريل ٢٠٢٥","n3.date":"٣١ مارس ٢٠٢٥"
   }};
   document.querySelectorAll('[data-i18n]').forEach(function(el){ I18N.en[el.getAttribute('data-i18n')] = el.innerHTML; });
   document.querySelectorAll('[data-i18n-ph]').forEach(function(el){ I18N.en[el.getAttribute('data-i18n-ph')] = el.getAttribute('placeholder'); });
 
-  var curLang = 'en';
-  function setLang(lang){
-    curLang = lang;
-    var rtl = (lang === 'ar');
-    document.documentElement.lang = lang;
+  var switchBtns = Array.prototype.slice.call(document.querySelectorAll('.lang-switch button'));
+  function setLang(l){
+    lang = l;
+    var rtl = (l === 'ar');
+    document.documentElement.lang = l;
     document.documentElement.dir = rtl ? 'rtl' : 'ltr';
     document.body.classList.toggle('rtl', rtl);
     document.querySelectorAll('[data-i18n]').forEach(function(el){
-      var k = el.getAttribute('data-i18n'); var v = (I18N[lang] && I18N[lang][k]);
-      if(v != null) el.innerHTML = v;
+      var k = el.getAttribute('data-i18n'); var v = (I18N[l] && I18N[l][k]);
+      el.innerHTML = (v != null) ? v : I18N.en[k];
     });
     document.querySelectorAll('[data-i18n-ph]').forEach(function(el){
-      var k = el.getAttribute('data-i18n-ph'); var v = (I18N[lang] && I18N[lang][k]);
-      if(v != null) el.setAttribute('placeholder', v);
+      var k = el.getAttribute('data-i18n-ph'); var v = (I18N[l] && I18N[l][k]);
+      el.setAttribute('placeholder', (v != null) ? v : I18N.en[k]);
     });
-    var btn = document.getElementById('langBtn');
-    if(btn) btn.textContent = rtl ? 'EN' : 'العربية';
+    renderCounts();
+    switchBtns.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-lang') === l); });
   }
-  var langBtn = document.getElementById('langBtn');
-  if(langBtn) langBtn.addEventListener('click', function(){ setLang(curLang === 'en' ? 'ar' : 'en'); });
+  switchBtns.forEach(function(b){ b.addEventListener('click', function(){ setLang(b.getAttribute('data-lang')); }); });
 })();
 </script>
 </body>
