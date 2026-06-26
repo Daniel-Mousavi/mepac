@@ -17,10 +17,9 @@
      Brand: navy / teal / gold + dot-mosaic logo. Archivo grotesque.
      Direction: cinematic, monumental, dark-forward, one accent (teal).
      PHOTO TREATMENT: navy duotone (grayscale + navy wash).
-     --- DYNAMIC ADDITIONS (this revision): hero video, sectors marquee,
-         pinned "The Case" scroll-chapter, pillar icons, animated logo
-         reveal, EN/AR (RTL) toggle. Each is in a labeled block; to remove
-         any, delete its block. Full rollback: meep-mepac-site.backup.html
+     Features: static photo hero, pillar icons, full-bleed pinned "The Case"
+     scroll-chapter, animated logo reveal, EN/AR (RTL) toggle, mission/vision
+     hover-expand. Full rollback snapshot: meep-mepac-site.backup.html
      ============================================================ */
 
   :root{
@@ -46,7 +45,7 @@
   ::selection{ background:var(--teal); color:#fff; }
   :focus-visible{ outline:2px solid var(--teal); outline-offset:3px; }
   .hero :focus-visible,.why :focus-visible,.join :focus-visible,footer.ft :focus-visible,
-  .mv__cell--dark :focus-visible,.split :focus-visible,.case :focus-visible,.marquee :focus-visible{ outline-color:var(--teal-bright); }
+  .mv__cell--dark :focus-visible,.split :focus-visible,.case :focus-visible{ outline-color:var(--teal-bright); }
   .wrap{ max-width:var(--maxw); margin:0 auto; padding-inline:var(--gutter); }
 
   /* RTL / Arabic */
@@ -54,15 +53,20 @@
   body.rtl h1, body.rtl h2, body.rtl h3, body.rtl h4, body.rtl .btn, body.rtl input,
   body.rtl .eyebrow, body.rtl nav.links a, body.rtl .ftcol h4{ font-family:var(--font-ar); }
   body.rtl{ letter-spacing:0 !important; }
-  body.rtl h1, body.rtl h2, body.rtl h3{ letter-spacing:-.01em; }
+  body.rtl h1, body.rtl h2, body.rtl h3, body.rtl h4{ letter-spacing:0; }
+  /* Arabic needs much looser leading than the tight Latin display tracking */
+  body.rtl .hero h1{ line-height:1.4; }
+  body.rtl .sec-head h2, body.rtl .mv__cell h2, body.rtl .why__lead h2,
+  body.rtl .split__panel h2, body.rtl .join h2, body.rtl .case__rail h2{ line-height:1.4; }
+  body.rtl .case__steps .lbl{ line-height:1.45; }
   body.rtl .arw{ display:inline-block; transform:scaleX(-1); }
   body.rtl .split__panel::before{ left:auto; right:0; }
-  body.rtl .case__rail{ }
 
   .eyebrow{ font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.24em;
     color:var(--gold-text); margin:0 0 22px; display:inline-flex; align-items:center; gap:13px; }
   .eyebrow::before{ content:""; width:30px; height:2px; background:var(--gold); display:inline-block; }
   .eyebrow--ondark{ color:var(--gold-bright); }
+  .eyebrow--bare::before{ display:none; }   /* no gold dash (hero + pillars) */
   body.rtl .eyebrow{ letter-spacing:.1em; }
 
   /* buttons */
@@ -119,15 +123,13 @@
   .menu-btn{ display:none; background:none; border:1px solid rgba(255,255,255,.4); color:#fff; padding:9px; border-radius:var(--radius); cursor:pointer; transition:color .3s var(--ease),border-color .3s var(--ease); }
   header.nav.solid .menu-btn{ border-color:var(--line); color:var(--ink); }
 
-  /* ===================== HERO (cinematic, video) ===================== */
+  /* ===================== HERO (static photo) ===================== */
   .hero{ position:relative; min-height:94vh; display:flex; align-items:flex-end; color:#fff; overflow:hidden; isolation:isolate;
     padding:150px 0 clamp(64px,8vh,104px); background:var(--navy-deep); }
   .hero__bg{ position:absolute; inset:0; z-index:0; }
-  .hero__bg img, .hero__bg video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-    filter:grayscale(1) contrast(1.06) brightness(.9); }
-  .hero__bg img{ opacity:.72; animation:heroZoom 28s var(--ease) infinite alternate; }
-  .hero__bg video{ opacity:.74; z-index:1; }            /* video sits over the poster img */
-  @keyframes heroZoom{ from{ transform:scale(1.03); } to{ transform:scale(1.12); } }
+  .hero__bg img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    filter:grayscale(1) contrast(1.06) brightness(.9); opacity:.72; animation:heroZoom 30s var(--ease) infinite alternate; }
+  @keyframes heroZoom{ from{ transform:scale(1.02); } to{ transform:scale(1.1); } }
   .hero__scrim{ position:absolute; inset:0; z-index:2;
     background:linear-gradient(0deg, rgba(8,16,32,.92) 0%, rgba(10,20,40,.55) 38%, rgba(12,24,46,.30) 66%, rgba(12,24,46,.42) 100%),
       linear-gradient(95deg, rgba(8,16,32,.7) 0%, transparent 58%); }
@@ -151,17 +153,11 @@
   .scroll-cue::after{ content:""; position:absolute; inset:0; background:var(--teal-bright); animation:cue 2.1s var(--ease) infinite; }
   @keyframes cue{ 0%{transform:translateY(-100%);} 60%,100%{transform:translateY(100%);} }
 
-  /* ===================== SECTORS MARQUEE ===================== */
-  .marquee{ background:var(--navy-deep); border-top:1px solid rgba(200,151,47,.32); border-bottom:1px solid rgba(200,151,47,.32); overflow:hidden; padding:17px 0; direction:ltr; }
-  .marquee__track{ display:flex; width:max-content; animation:marq 42s linear infinite; }
-  .marquee:hover .marquee__track{ animation-play-state:paused; }
-  .marquee__item{ display:inline-flex; align-items:center; color:rgba(255,255,255,.72); font-size:13px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; white-space:nowrap; padding:0 30px; }
-  .marquee__item::after{ content:"◆"; color:var(--teal-bright); font-size:7px; margin-left:30px; transform:translateY(-2px); }
-  @keyframes marq{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
-
-  /* ===================== MISSION / VISION ===================== */
-  .mv{ display:grid; grid-template-columns:1fr 1fr; }
-  .mv__cell{ padding:clamp(60px,8vw,128px) clamp(34px,5vw,80px); }
+  /* ===================== MISSION / VISION (hover-expand) ===================== */
+  .mv{ display:flex; }
+  .mv__cell{ flex:1 1 0; min-width:0; transition:flex-grow .55s var(--ease); padding:clamp(60px,8vw,128px) clamp(34px,5vw,80px); }
+  .mv:hover .mv__cell{ flex-grow:.8; }
+  .mv:hover .mv__cell:hover{ flex-grow:1.6; }
   .mv__cell--light{ background:var(--mist); display:flex; flex-direction:column; align-items:flex-end; }
   .mv__cell--dark{ background:var(--navy); color:#fff; }
   .mv__inner{ max-width:540px; width:100%; }
@@ -178,14 +174,12 @@
   /* ===================== PILLARS ===================== */
   .pillars{ padding:var(--pad-y-tight) 0; background:var(--white); }
   .pillar-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
-  .pillar{ background:var(--white); padding:clamp(30px,3vw,44px); display:flex; flex-direction:column; min-height:286px; transition:background .25s var(--ease); }
+  .pillar{ background:var(--white); padding:clamp(30px,3vw,44px); display:flex; flex-direction:column; min-height:280px; transition:background .25s var(--ease); }
   .pillar:hover{ background:#f7fafc; }
-  .pillar__top{ display:flex; align-items:center; gap:14px; margin-bottom:auto; }
-  .pillar__icon{ width:30px; height:30px; flex:none; fill:none; stroke:var(--navy); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; transition:stroke .25s var(--ease); }
+  .pillar__icon{ width:34px; height:34px; flex:none; margin-bottom:auto; fill:none; stroke:var(--navy); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; transition:stroke .25s var(--ease); }
   .pillar__icon .ac{ stroke:var(--teal); }
   .pillar:hover .pillar__icon{ stroke:var(--teal); }
-  .pillar__num{ font-size:13px; font-weight:800; color:var(--gold-text); letter-spacing:.1em; }
-  .pillar h3{ font-size:23px; font-weight:800; letter-spacing:-.02em; line-height:1.12; margin:28px 0 13px; }
+  .pillar h3{ font-size:23px; font-weight:800; letter-spacing:-.02em; line-height:1.12; margin:30px 0 13px; }
   .pillar p{ font-size:16px; line-height:1.58; color:var(--slate); }
   .pillar__tag{ margin-top:22px; padding-top:15px; border-top:2px solid var(--teal); font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--navy); }
 
@@ -216,25 +210,31 @@
   .stat__lbl{ margin-top:13px; font-size:13.5px; line-height:1.45; color:rgba(255,255,255,.92); }
   .why__src{ position:relative; z-index:1; margin-top:28px; font-size:12px; color:rgba(255,255,255,.78); letter-spacing:.02em; }
 
-  /* ===================== "THE CASE" — pinned scroll-chapter ===================== */
-  .case{ background:var(--navy-deep); color:#fff; }
-  .case__inner{ max-width:var(--maxw); margin:0 auto; padding-inline:var(--gutter); display:grid; grid-template-columns:.82fr 1.18fr; gap:clamp(30px,5vw,84px); }
-  .case__rail{ position:sticky; top:104px; align-self:start; padding:clamp(70px,9vw,120px) 0; }
-  .case__rail h2{ color:#fff; font-weight:800; font-size:clamp(30px,3.4vw,46px); letter-spacing:-.03em; line-height:1.04; margin:14px 0 34px; }
-  .case__steps{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:18px; }
-  .case__steps li{ display:flex; align-items:baseline; gap:16px; color:rgba(255,255,255,.42); font-weight:700; font-size:17px; letter-spacing:-.01em; transition:color .35s var(--ease); }
-  .case__steps li .st-n{ font-size:12px; font-weight:800; letter-spacing:.1em; color:rgba(255,255,255,.32); transition:color .35s var(--ease); min-width:22px; }
-  .case__steps li.active{ color:#fff; }
+  /* ===================== "THE CASE" — full-bleed pinned scroll-chapter ===================== */
+  .case{ position:relative; height:400vh; background:var(--navy-deep); }
+  .case__stage{ position:sticky; top:0; height:100vh; overflow:hidden; display:flex; align-items:center; color:#fff; }
+  .case__media{ position:absolute; inset:0; z-index:0; background:var(--navy-deep); }
+  .case__media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    filter:grayscale(1) contrast(1.06) brightness(.82); opacity:0; transform:scale(1.05);
+    transition:opacity .9s var(--ease), transform 7s var(--ease); }
+  .case__media img.active{ opacity:1; transform:scale(1); }
+  .case__scrim{ position:absolute; inset:0; z-index:1;
+    background:linear-gradient(90deg, rgba(8,16,32,.94) 0%, rgba(8,16,32,.7) 42%, rgba(8,16,32,.32) 100%),
+      linear-gradient(0deg, rgba(8,16,32,.5), transparent 52%); }
+  body.rtl .case__scrim{ background:linear-gradient(270deg, rgba(8,16,32,.94) 0%, rgba(8,16,32,.7) 42%, rgba(8,16,32,.32) 100%),
+      linear-gradient(0deg, rgba(8,16,32,.5), transparent 52%); }
+  .case__overlay{ position:relative; z-index:2; width:100%; }
+  .case__rail{ max-width:660px; }
+  .case__rail h2{ color:#fff; font-weight:800; font-size:clamp(30px,3.4vw,46px); letter-spacing:-.03em; line-height:1.04; margin:12px 0 26px; }
+  .case__steps{ list-style:none; margin:0; padding:0; }
+  .case__steps li{ display:grid; grid-template-columns:auto 1fr; gap:18px; padding:18px 0; border-top:1px solid rgba(255,255,255,.16); }
+  .case__steps li:last-child{ border-bottom:1px solid rgba(255,255,255,.16); }
+  .case__steps .st-n{ font-size:12px; font-weight:800; letter-spacing:.12em; color:rgba(255,255,255,.34); padding-top:7px; transition:color .4s var(--ease); }
+  .case__steps .lbl{ display:block; font-weight:800; font-size:18px; letter-spacing:-.01em; line-height:1.16; color:rgba(255,255,255,.5); transition:color .4s var(--ease), font-size .4s var(--ease); }
+  .case__steps .desc{ max-height:0; opacity:0; overflow:hidden; margin:0; color:rgba(255,255,255,.84); font-size:15.5px; line-height:1.5; max-width:50ch; transition:max-height .55s var(--ease), opacity .45s var(--ease), margin .45s var(--ease); }
   .case__steps li.active .st-n{ color:var(--gold-bright); }
-  .case__panels{ padding:clamp(40px,8vw,120px) 0; }
-  .case__panel{ min-height:84vh; display:flex; align-items:center; }
-  .case__card{ position:relative; width:100%; aspect-ratio:4/3; margin:0; overflow:hidden; background:var(--navy); }
-  .case__card img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.06) brightness(.84); }
-  .case__card::after{ content:""; position:absolute; inset:0; background:linear-gradient(0deg, rgba(8,16,32,.9) 0%, rgba(8,16,32,.25) 50%, transparent 80%); }
-  .case__cap{ position:absolute; left:0; right:0; bottom:0; padding:clamp(26px,3.4vw,48px); z-index:1; }
-  .case__cap .st-n{ font-size:12px; font-weight:800; letter-spacing:.16em; color:var(--gold-bright); }
-  .case__cap h3{ color:#fff; font-weight:800; font-size:clamp(24px,3vw,40px); letter-spacing:-.025em; line-height:1.04; margin:12px 0 12px; }
-  .case__cap p{ color:rgba(255,255,255,.84); font-size:16px; line-height:1.5; max-width:46ch; }
+  .case__steps li.active .lbl{ color:#fff; font-size:clamp(23px,2.5vw,32px); }
+  .case__steps li.active .desc{ max-height:160px; opacity:1; margin-top:12px; }
 
   /* ===================== LEADERSHIP ===================== */
   .people{ padding:var(--pad-y) 0; background:var(--mist); }
@@ -314,15 +314,20 @@
     .people-grid{ grid-template-columns:repeat(2,1fr); }
     .why__inner{ grid-template-columns:1fr; } .why__stats{ grid-template-columns:repeat(2,1fr); }
     .news-grid{ grid-template-columns:1fr; max-width:560px; }
-    .mv{ grid-template-columns:1fr; } .mv__cell--light{ align-items:flex-start; }
+    .mv{ flex-direction:column; } .mv__cell{ flex:1 1 auto; } .mv__cell--light{ align-items:flex-start; }
+    .mv:hover .mv__cell, .mv:hover .mv__cell:hover{ flex-grow:1; }   /* no squish on stacked */
     .split{ grid-template-columns:1fr; } .split__media{ min-height:360px; }
     .join__inner{ grid-template-columns:1fr; }
     .ft__top{ grid-template-columns:1fr 1fr; } .ft__brand{ grid-column:1 / -1; }
-    .case__inner{ grid-template-columns:1fr; gap:0; }
-    .case__rail{ position:static; padding:clamp(54px,8vw,80px) 0 0; }
-    .case__rail h2{ margin-bottom:18px; }
-    .case__panels{ padding:30px 0 clamp(54px,8vw,80px); }
-    .case__panel{ min-height:auto; padding:18px 0; }
+    /* Case: un-pin, single backdrop, all steps expanded */
+    .case{ height:auto; }
+    .case__stage{ position:static; height:auto; display:block; padding:clamp(64px,11vw,96px) 0; }
+    .case__media img{ opacity:0 !important; }
+    .case__media img[data-step="1"]{ opacity:1 !important; }
+    .case__rail{ max-width:none; }
+    .case__steps .lbl{ font-size:21px !important; color:#fff !important; }
+    .case__steps .st-n{ color:var(--gold-bright) !important; }
+    .case__steps .desc{ max-height:none !important; opacity:1 !important; margin-top:11px !important; }
   }
   @media (max-width:680px){
     nav.links, .nav__cta .btn{ display:none; } .menu-btn{ display:inline-flex; }
@@ -336,7 +341,6 @@
     .reveal{ opacity:1; transform:none; transition:none; }
     .scroll-cue{ display:none; } .hero__bg img{ transform:none; }
     #mark-header svg rect{ opacity:1; }
-    .hero__bg video{ display:none; }   /* show poster still instead of motion */
   }
 
   .skip{ position:fixed; left:12px; top:-60px; background:#fff; color:var(--navy); padding:10px 16px; z-index:100; transition:top .2s var(--ease); }
@@ -377,18 +381,15 @@
   </div>
 </header>
 
-<!-- ===================== HERO (video) ===================== -->
+<!-- ===================== HERO (static photo) ===================== -->
 <section class="hero">
   <div class="hero__bg" aria-hidden="true">
     <img src="assets/img/hero-detroit.jpg" alt="" />
-    <video autoplay muted loop playsinline poster="assets/img/hero-detroit.jpg">
-      <source src="assets/video/hero.mp4" type="video/mp4" />
-    </video>
   </div>
   <div class="hero__scrim" aria-hidden="true"></div>
   <div class="hero__dots" aria-hidden="true"></div>
   <div class="wrap hero__inner">
-    <p class="eyebrow eyebrow--ondark reveal" data-i18n="hero.eyebrow">Michigan Economic Empowerment PAC</p>
+    <p class="eyebrow eyebrow--ondark eyebrow--bare reveal" data-i18n="hero.eyebrow">Michigan Economic Empowerment PAC</p>
     <h1 class="reveal d1" data-i18n="hero.h1">Building political power for Michigan&rsquo;s <span class="accent">economic future</span>.</h1>
     <div class="hero__gold-rule reveal d1"></div>
     <p class="hero__sub reveal d2" data-i18n="hero.sub">Globalizing Michigan. Supporting our diverse business and civic community. Ensuring the people who shape our economy, build our neighborhoods, and invest in our future are represented at every level of government.</p>
@@ -399,13 +400,6 @@
   </div>
   <span class="scroll-cue" aria-hidden="true"></span>
 </section>
-
-<!-- ===================== SECTORS MARQUEE ===================== -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee__track" id="marqueeTrack">
-    <span class="marquee__item">Automotive</span><span class="marquee__item">Advanced Manufacturing</span><span class="marquee__item">Logistics &amp; Trade</span><span class="marquee__item">Small Business</span><span class="marquee__item">Healthcare</span><span class="marquee__item">Technology</span><span class="marquee__item">Workforce</span><span class="marquee__item">Agriculture</span><span class="marquee__item">Clean Energy</span><span class="marquee__item">Entrepreneurship</span>
-  </div>
-</div>
 
 <main id="main">
 
@@ -429,60 +423,42 @@
 <section class="pillars" id="priorities" aria-label="What we stand for">
   <div class="wrap">
     <div class="sec-head reveal">
-      <p class="eyebrow" data-i18n="pillars.eyebrow">What We Stand For</p>
+      <p class="eyebrow eyebrow--bare" data-i18n="pillars.eyebrow">What We Stand For</p>
       <h2 data-i18n="pillars.h2">Six commitments that shape every endorsement, dollar, and decision.</h2>
     </div>
     <div class="pillar-grid">
       <article class="pillar reveal">
-        <div class="pillar__top">
-          <svg class="pillar__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path class="ac" d="M12 3c3.2 2.6 3.2 15.4 0 18M12 3c-3.2 2.6-3.2 15.4 0 18"/></svg>
-          <span class="pillar__num">01</span>
-        </div>
+        <svg class="pillar__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path class="ac" d="M12 3c3.2 2.6 3.2 15.4 0 18M12 3c-3.2 2.6-3.2 15.4 0 18"/></svg>
         <h3 data-i18n="p1.title">Globalizing Michigan</h3>
         <p data-i18n="p1.desc">Connecting Michigan businesses and communities to global markets and opportunities.</p>
         <span class="pillar__tag" data-i18n="p1.tag">Trade &amp; Markets</span>
       </article>
       <article class="pillar reveal d1">
-        <div class="pillar__top">
-          <svg class="pillar__icon" viewBox="0 0 24 24"><path d="M3.5 9l1.6-4.2h13.8L20.5 9"/><path d="M4.5 9v11h15V9"/><path class="ac" d="M9.5 20v-6h5v6"/><path d="M3 9h18"/></svg>
-          <span class="pillar__num">02</span>
-        </div>
+        <svg class="pillar__icon" viewBox="0 0 24 24"><path d="M3.5 9l1.6-4.2h13.8L20.5 9"/><path d="M4.5 9v11h15V9"/><path class="ac" d="M9.5 20v-6h5v6"/><path d="M3 9h18"/></svg>
         <h3 data-i18n="p2.title">Small Business &amp; Entrepreneurship</h3>
         <p data-i18n="p2.desc">Championing the innovators and job creators driving our economy forward.</p>
         <span class="pillar__tag" data-i18n="p2.tag">Job Creation</span>
       </article>
       <article class="pillar reveal d2">
-        <div class="pillar__top">
-          <svg class="pillar__icon" viewBox="0 0 24 24"><path d="M4 19h16"/><path d="M5 15.5l4.5-4.5 3 2.2 6-6.7"/><path class="ac" d="M19 6.5h-3.4M19 6.5v3.4"/></svg>
-          <span class="pillar__num">03</span>
-        </div>
+        <svg class="pillar__icon" viewBox="0 0 24 24"><path d="M4 19h16"/><path d="M5 15.5l4.5-4.5 3 2.2 6-6.7"/><path class="ac" d="M19 6.5h-3.4M19 6.5v3.4"/></svg>
         <h3 data-i18n="p3.title">Access to Capital</h3>
         <p data-i18n="p3.desc">Expanding pathways to funding for businesses and community-led initiatives.</p>
         <span class="pillar__tag" data-i18n="p3.tag">Investment</span>
       </article>
       <article class="pillar reveal d3">
-        <div class="pillar__top">
-          <svg class="pillar__icon" viewBox="0 0 24 24"><circle cx="8.5" cy="8" r="3"/><path d="M3 20c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><circle class="ac" cx="16.5" cy="9" r="2.4"/><path class="ac" d="M14 20c.3-2.4 1.9-3.9 3.7-3.9S21.1 17.6 21.4 20"/></svg>
-          <span class="pillar__num">04</span>
-        </div>
+        <svg class="pillar__icon" viewBox="0 0 24 24"><circle cx="8.5" cy="8" r="3"/><path d="M3 20c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><circle class="ac" cx="16.5" cy="9" r="2.4"/><path class="ac" d="M14 20c.3-2.4 1.9-3.9 3.7-3.9S21.1 17.6 21.4 20"/></svg>
         <h3 data-i18n="p4.title">Workforce &amp; Talent</h3>
         <p data-i18n="p4.desc">Investing in people and pathways to build Michigan&rsquo;s future workforce.</p>
         <span class="pillar__tag" data-i18n="p4.tag">Talent</span>
       </article>
       <article class="pillar reveal d4">
-        <div class="pillar__top">
-          <svg class="pillar__icon" viewBox="0 0 24 24"><path d="M3 21V8l6-3v16"/><path class="ac" d="M9 21V9.5l6 3V21"/><path d="M15 21v-7l5 2.2V21"/><path d="M2 21h20"/></svg>
-          <span class="pillar__num">05</span>
-        </div>
+        <svg class="pillar__icon" viewBox="0 0 24 24"><path d="M3 21V8l6-3v16"/><path class="ac" d="M9 21V9.5l6 3V21"/><path d="M15 21v-7l5 2.2V21"/><path d="M2 21h20"/></svg>
         <h3 data-i18n="p5.title">Community Investment</h3>
         <p data-i18n="p5.desc">Strengthening neighborhoods and infrastructure for lasting impact.</p>
         <span class="pillar__tag" data-i18n="p5.tag">Neighborhoods</span>
       </article>
       <article class="pillar reveal d5">
-        <div class="pillar__top">
-          <svg class="pillar__icon" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-4 4z"/><circle class="ac" cx="9" cy="10.5" r="1"/><circle class="ac" cx="13" cy="10.5" r="1"/><circle class="ac" cx="17" cy="10.5" r="1"/></svg>
-          <span class="pillar__num">06</span>
-        </div>
+        <svg class="pillar__icon" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-4 4z"/><circle class="ac" cx="9" cy="10.5" r="1"/><circle class="ac" cx="13" cy="10.5" r="1"/><circle class="ac" cx="17" cy="10.5" r="1"/></svg>
         <h3 data-i18n="p6.title">Representation</h3>
         <p data-i18n="p6.desc">Ensuring diverse voices shape policies that reflect our communities and our values.</p>
         <span class="pillar__tag" data-i18n="p6.tag">Voice</span>
@@ -499,7 +475,7 @@
   <div class="split__panel reveal d1">
     <p class="eyebrow" data-i18n="split.eyebrow">Globalizing Michigan</p>
     <h2 data-i18n="split.h2">Where Michigan connects to the <span class="accent">global economy.</span></h2>
-    <p data-i18n="split.p">From the Straits of Mackinac to the Detroit River crossings, Michigan is built on movement &mdash; of goods, talent, and ideas. We back leaders who open doors to international markets and bring that opportunity home to every community.</p>
+    <p data-i18n="split.p">From the Straits of Mackinac to the Detroit River crossings, Michigan is built on the movement of goods, talent, and ideas. We back leaders who open doors to international markets and bring that opportunity home to every community.</p>
     <div class="split__stat"><b>$85B+</b><span data-i18n="split.statlabel">in global exports from Michigan businesses each year.</span></div>
   </div>
 </section>
@@ -525,35 +501,42 @@
   </div>
 </section>
 
-<!-- ===================== "THE CASE" — pinned scroll-chapter ===================== -->
+<!-- ===================== "THE CASE" — full-bleed pinned scroll-chapter ===================== -->
 <section class="case" aria-label="The case">
-  <div class="case__inner">
-    <div class="case__rail">
-      <p class="eyebrow eyebrow--ondark" data-i18n="case.eyebrow">The Case</p>
-      <h2 data-i18n="case.h2">Why we build power.</h2>
-      <ol class="case__steps" id="caseSteps">
-        <li data-step="1" class="active"><span class="st-n">01</span><span data-i18n="case.s1">Power lives where decisions are made</span></li>
-        <li data-step="2"><span class="st-n">02</span><span data-i18n="case.s2">Michigan&rsquo;s future is global</span></li>
-        <li data-step="3"><span class="st-n">03</span><span data-i18n="case.s3">Opportunity must reach every community</span></li>
-        <li data-step="4"><span class="st-n">04</span><span data-i18n="case.s4">Representation changes outcomes</span></li>
-      </ol>
+  <div class="case__stage">
+    <div class="case__media" aria-hidden="true">
+      <img class="active" data-step="1" src="assets/img/band-capitol-wide.jpg" alt="" />
+      <img data-step="2" src="assets/img/news-trade.jpg" alt="" />
+      <img data-step="3" src="assets/img/city-grandrapids.jpg" alt="" />
+      <img data-step="4" src="assets/img/news-voices.jpg" alt="" />
     </div>
-    <div class="case__panels">
-      <div class="case__panel" data-step="1">
-        <figure class="case__card"><img src="assets/img/band-capitol-wide.jpg" alt="The Michigan State Capitol in Lansing." />
-          <figcaption class="case__cap"><div class="st-n">01</div><h3 data-i18n="case.p1.t">Power lives where decisions are made.</h3><p data-i18n="case.p1.d">We back leaders at every level &mdash; city hall to Lansing to Washington &mdash; so Michigan&rsquo;s economy has a seat at every table.</p></figcaption></figure>
-      </div>
-      <div class="case__panel" data-step="2">
-        <figure class="case__card"><img src="assets/img/news-trade.jpg" alt="The Ambassador Bridge linking Detroit to Windsor." />
-          <figcaption class="case__cap"><div class="st-n">02</div><h3 data-i18n="case.p2.t">Michigan&rsquo;s future is global.</h3><p data-i18n="case.p2.d">We champion the trade, talent, and investment that connect our communities to the world.</p></figcaption></figure>
-      </div>
-      <div class="case__panel" data-step="3">
-        <figure class="case__card"><img src="assets/img/city-grandrapids.jpg" alt="The Grand Rapids skyline." />
-          <figcaption class="case__cap"><div class="st-n">03</div><h3 data-i18n="case.p3.t">Opportunity must reach every community.</h3><p data-i18n="case.p3.d">From Detroit to Grand Rapids, we invest in the neighborhoods and small businesses that power the state.</p></figcaption></figure>
-      </div>
-      <div class="case__panel" data-step="4">
-        <figure class="case__card"><img src="assets/img/news-voices.jpg" alt="A diverse crowd at Detroit&rsquo;s Eastern Market." />
-          <figcaption class="case__cap"><div class="st-n">04</div><h3 data-i18n="case.p4.t">Representation changes outcomes.</h3><p data-i18n="case.p4.d">When the people who build our economy help shape its policies, everyone does better.</p></figcaption></figure>
+    <div class="case__scrim" aria-hidden="true"></div>
+    <div class="wrap case__overlay">
+      <div class="case__rail">
+        <p class="eyebrow eyebrow--ondark" data-i18n="case.eyebrow">The Case</p>
+        <h2 data-i18n="case.h2">Why we build power.</h2>
+        <ol class="case__steps" id="caseSteps">
+          <li data-step="1" class="active">
+            <span class="st-n">01</span>
+            <div class="case__txt"><span class="lbl" data-i18n="case.s1">Power lives where decisions are made</span>
+              <p class="desc" data-i18n="case.p1.d">We back leaders at every level, from city hall to Lansing to Washington, so Michigan&rsquo;s economy has a seat at every table.</p></div>
+          </li>
+          <li data-step="2">
+            <span class="st-n">02</span>
+            <div class="case__txt"><span class="lbl" data-i18n="case.s2">Michigan&rsquo;s future is global</span>
+              <p class="desc" data-i18n="case.p2.d">We champion the trade, talent, and investment that connect our communities to the world.</p></div>
+          </li>
+          <li data-step="3">
+            <span class="st-n">03</span>
+            <div class="case__txt"><span class="lbl" data-i18n="case.s3">Opportunity must reach every community</span>
+              <p class="desc" data-i18n="case.p3.d">From Detroit to Grand Rapids, we invest in the neighborhoods and small businesses that power the state.</p></div>
+          </li>
+          <li data-step="4">
+            <span class="st-n">04</span>
+            <div class="case__txt"><span class="lbl" data-i18n="case.s4">Representation changes outcomes</span>
+              <p class="desc" data-i18n="case.p4.d">When the people who build our economy help shape its policies, everyone does better.</p></div>
+          </li>
+        </ol>
       </div>
     </div>
   </div>
@@ -718,27 +701,26 @@
   else { var cio = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ animateCount(e.target); cio.unobserve(e.target); } }); }, {threshold:.6});
     counters.forEach(function(el){ cio.observe(el); }); }
 
-  /* ---------- "The Case" pinned step tracking ---------- */
-  var caseSteps = document.getElementById('caseSteps');
-  if(caseSteps && 'IntersectionObserver' in window){
-    var stepLis = caseSteps.querySelectorAll('li');
-    function setStep(n){ stepLis.forEach(function(li){ li.classList.toggle('active', li.getAttribute('data-step')===String(n)); }); }
-    var pio = new IntersectionObserver(function(es){
-      es.forEach(function(e){ if(e.isIntersecting){ setStep(e.target.getAttribute('data-step')); } });
-    }, {rootMargin:'-45% 0px -45% 0px', threshold:0});
-    document.querySelectorAll('.case__panel').forEach(function(p){ pio.observe(p); });
+  /* ---------- "The Case": full-bleed, scroll-driven active step ---------- */
+  var caseEl = document.querySelector('.case');
+  if(caseEl){
+    var cimgs = caseEl.querySelectorAll('.case__media img');
+    var clis = caseEl.querySelectorAll('.case__steps li');
+    var cN = clis.length, ctick = false;
+    function caseUpdate(){
+      var top = caseEl.getBoundingClientRect().top;
+      var span = caseEl.offsetHeight - window.innerHeight;
+      var prog = span > 0 ? Math.min(Math.max(-top/span, 0), 1) : 0;
+      var stepN = Math.min(cN, Math.floor(prog*cN) + 1);
+      cimgs.forEach(function(im){ im.classList.toggle('active', parseInt(im.getAttribute('data-step'),10) === stepN); });
+      clis.forEach(function(li){ li.classList.toggle('active', parseInt(li.getAttribute('data-step'),10) === stepN); });
+      ctick = false;
+    }
+    function caseScroll(){ if(!ctick){ ctick = true; requestAnimationFrame(caseUpdate); } }
+    window.addEventListener('scroll', caseScroll, {passive:true});
+    window.addEventListener('resize', caseScroll, {passive:true});
+    caseUpdate();
   }
-
-  /* ---------- hero video: pause under reduced-motion, fall back to poster ---------- */
-  var heroVid = document.querySelector('.hero__bg video');
-  if(heroVid){
-    if(reduce){ try{ heroVid.pause(); }catch(e){} heroVid.style.display='none'; }
-    heroVid.addEventListener('error', function(){ heroVid.style.display='none'; }); /* keep poster img if video missing */
-  }
-
-  /* ---------- duplicate marquee track for a seamless loop ---------- */
-  var mt = document.getElementById('marqueeTrack');
-  if(mt){ mt.innerHTML = mt.innerHTML + mt.innerHTML; }
 
   /* ===================== EN / AR (RTL) TOGGLE ===================== */
   var I18N = { en:{}, ar:{
@@ -757,17 +739,17 @@
     "p5.title":"الاستثمار المجتمعي","p5.desc":"تعزيز الأحياء والبنية التحتية لتحقيق أثرٍ دائم.","p5.tag":"الأحياء",
     "p6.title":"التمثيل","p6.desc":"ضمان أن تُشكّل الأصوات المتنوّعة السياسات التي تعكس مجتمعاتنا وقيمنا.","p6.tag":"الصوت",
     "split.eyebrow":"عَولمة ميشيغان","split.h2":"حيث تتّصل ميشيغان <span class=\"accent\">بالاقتصاد العالمي.</span>",
-    "split.p":"من مضيق ماكيناك إلى معابر نهر ديترويت، بُنيت ميشيغان على الحركة — حركة البضائع والمواهب والأفكار. ندعم القادة الذين يفتحون أبواب الأسواق الدولية ويجلبون تلك الفرصة إلى كل مجتمع.",
+    "split.p":"من مضيق ماكيناك إلى معابر نهر ديترويت، بُنيت ميشيغان على حركة البضائع والمواهب والأفكار. ندعم القادة الذين يفتحون أبواب الأسواق الدولية ويجلبون تلك الفرصة إلى كل مجتمع.",
     "split.statlabel":"من الصادرات العالمية لشركات ميشيغان سنويًا.",
     "why.eyebrow":"لماذا يهمّ هذا","why.h2":"الرهانات حقيقية.","why.lead":"الاستثمار في القوة السياسية يصنع سياساتٍ أفضل، ومجتمعاتٍ أقوى، وميشيغان أكثر ازدهارًا للجميع.",
     "why.s1":"وظيفة تدعمها الأعمال الصغيرة في أنحاء ميشيغان.","why.s2":"من الصادرات العالمية لشركات ميشيغان.","why.s3":"من سكان ميشيغان يُعرّفون أنفسهم ضمن فئةٍ ممثَّلةٍ تمثيلًا ناقصًا تاريخيًا.","why.s4":"تصنيف ميشيغان في التنافسية العالمية.",
     "why.src":"تُستكمل المصادر قبل النشر.",
     "case.eyebrow":"الحُجّة","case.h2":"لماذا نبني القوة.",
     "case.s1":"القوة حيث تُتّخذ القرارات","case.s2":"مستقبل ميشيغان عالمي","case.s3":"الفرصة يجب أن تصل إلى كل مجتمع","case.s4":"التمثيل يغيّر النتائج",
-    "case.p1.t":"القوة حيث تُتّخذ القرارات.","case.p1.d":"ندعم القادة على كل مستوى — من البلديات إلى لانسينغ إلى واشنطن — كي يكون لاقتصاد ميشيغان مقعدٌ على كل طاولة.",
-    "case.p2.t":"مستقبل ميشيغان عالمي.","case.p2.d":"ندافع عن التجارة والمواهب والاستثمار التي تربط مجتمعاتنا بالعالم.",
-    "case.p3.t":"الفرصة يجب أن تصل إلى كل مجتمع.","case.p3.d":"من ديترويت إلى غراند رابيدز، نستثمر في الأحياء والأعمال الصغيرة التي تُشغّل الولاية.",
-    "case.p4.t":"التمثيل يغيّر النتائج.","case.p4.d":"حين يساعد صنّاع اقتصادنا في رسم سياساته، يستفيد الجميع.",
+    "case.p1.d":"ندعم القادة على كل مستوى، من البلديات إلى لانسينغ إلى واشنطن، كي يكون لاقتصاد ميشيغان مقعدٌ على كل طاولة.",
+    "case.p2.d":"ندافع عن التجارة والمواهب والاستثمار التي تربط مجتمعاتنا بالعالم.",
+    "case.p3.d":"من ديترويت إلى غراند رابيدز، نستثمر في الأحياء والأعمال الصغيرة التي تُشغّل الولاية.",
+    "case.p4.d":"حين يساعد صنّاع اقتصادنا في رسم سياساته، يستفيد الجميع.",
     "leadership.eyebrow":"القيادة","leadership.h2":"الأشخاص المسؤولون عن كل دولار.","leadership.p":"تحالفٌ من قادة الأعمال والمجتمع المدني من أنحاء ميشيغان. سيُعلَن عن قائمة قيادتنا الكاملة مع انطلاق اللجنة.",
     "role.chair":"الرئيس","role.treasurer":"أمين الصندوق","role.board":"عضو مجلس الإدارة","person.tba":"سيُعلَن لاحقًا",
     "person.b1":"يقود استراتيجية اللجنة وتحالفها.","person.b2":"مسؤول عن الامتثال والشفافية المالية.","person.b3":"يمثّل مجتمع الأعمال في ميشيغان.","person.b4":"يمثّل الشركاء المدنيين والمجتمعيين في ميشيغان.",
@@ -783,7 +765,6 @@
     "footer.disclaimer":"مموَّل من لجنة العمل السياسي للتمكين الاقتصادي في ميشيغان. غير مُصرَّحٍ به من أي مرشّح أو لجنة مرشّح.",
     "footer.rights":"© 2025 لجنة العمل السياسي للتمكين الاقتصادي في ميشيغان. جميع الحقوق محفوظة."
   }};
-  // capture English originals (as innerHTML, to preserve accent spans)
   document.querySelectorAll('[data-i18n]').forEach(function(el){ I18N.en[el.getAttribute('data-i18n')] = el.innerHTML; });
   document.querySelectorAll('[data-i18n-ph]').forEach(function(el){ I18N.en[el.getAttribute('data-i18n-ph')] = el.getAttribute('placeholder'); });
 
