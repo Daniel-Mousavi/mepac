@@ -156,8 +156,13 @@
   /* ===================== MISSION / VISION (hover-expand) ===================== */
   .mv{ display:flex; }
   /* Fixed-measure text (max-width 420) means the heading NEVER re-wraps as the
-     cell resizes — only whitespace animates, so the hover-expand stays smooth. */
-  .mv__cell{ flex:1 1 0; min-width:0; transition:flex-grow .5s var(--ease); will-change:flex-grow; padding:clamp(60px,8vw,128px) clamp(34px,5vw,80px); }
+     cell resizes — only whitespace animates, so the hover-expand stays smooth.
+     NOTE: these cells also carry .reveal, whose later `transition` rule would
+     clobber a flex-grow transition — so we re-declare a COMBINED transition at
+     higher specificity (.mv .mv__cell) to keep both the reveal fade AND the
+     flex-grow tween. Without this, flex-grow has no transition and snaps. */
+  .mv__cell{ flex:1 1 0; min-width:0; will-change:flex-grow; padding:clamp(60px,8vw,128px) clamp(34px,5vw,80px); }
+  .mv .mv__cell{ transition:opacity .7s var(--ease), transform .7s var(--ease), flex-grow .5s var(--ease); }
   .mv:hover .mv__cell{ flex-grow:.9; }
   .mv:hover .mv__cell:hover{ flex-grow:1.2; }
   .mv__cell--light{ background:var(--mist); display:flex; flex-direction:column; align-items:flex-end; }
