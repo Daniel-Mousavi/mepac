@@ -155,12 +155,14 @@
 
   /* ===================== MISSION / VISION (hover-expand) ===================== */
   .mv{ display:flex; }
-  .mv__cell{ flex:1 1 0; min-width:0; transition:flex-grow .55s var(--ease); padding:clamp(60px,8vw,128px) clamp(34px,5vw,80px); }
-  .mv:hover .mv__cell{ flex-grow:.8; }
-  .mv:hover .mv__cell:hover{ flex-grow:1.6; }
+  /* Fixed-measure text (max-width 420) means the heading NEVER re-wraps as the
+     cell resizes — only whitespace animates, so the hover-expand stays smooth. */
+  .mv__cell{ flex:1 1 0; min-width:0; transition:flex-grow .5s var(--ease); will-change:flex-grow; padding:clamp(60px,8vw,128px) clamp(34px,5vw,80px); }
+  .mv:hover .mv__cell{ flex-grow:.9; }
+  .mv:hover .mv__cell:hover{ flex-grow:1.2; }
   .mv__cell--light{ background:var(--mist); display:flex; flex-direction:column; align-items:flex-end; }
   .mv__cell--dark{ background:var(--navy); color:#fff; }
-  .mv__inner{ max-width:540px; width:100%; }
+  .mv__inner{ max-width:420px; width:100%; }
   .mv__cell h2{ font-weight:800; font-size:clamp(28px,3.4vw,46px); line-height:1.06; letter-spacing:-.03em; margin:0; }
   .mv__cell--light h2{ color:var(--ink); } .mv__cell--dark h2{ color:#fff; }
   .mv__cell--dark h2 .accent{ color:var(--teal-bright); } .mv__cell--dark .eyebrow{ color:var(--gold-bright); }
