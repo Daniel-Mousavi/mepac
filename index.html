@@ -99,16 +99,17 @@
   header.nav.solid{ background:rgba(255,255,255,.9); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid var(--line); }
   .nav__inner{ max-width:var(--maxw); margin:0 auto; padding:13px var(--gutter); display:flex; align-items:center; justify-content:space-between; gap:24px; }
   .brand{ display:flex; align-items:center; gap:14px; }
-  .brand__mark{ flex:none; width:46px; height:54px; }
-  .brand__mark rect.m-N{ fill:var(--navy); } .brand__mark rect.m-T{ fill:var(--teal); } .brand__mark rect.m-S{ fill:#8a9bb0; } .brand__mark rect.m-G{ fill:var(--gold); }
-  header.nav:not(.solid) .brand__mark rect.m-N{ fill:#fff; }
-  header.nav:not(.solid) .brand__mark rect.m-T{ fill:var(--teal-bright); }
-  header.nav:not(.solid) .brand__mark rect.m-S{ fill:rgba(255,255,255,.55); }
-  header.nav:not(.solid) .brand__mark rect.m-G{ fill:var(--gold-bright); }
-  .ft__brand .brand__mark rect.m-N{ fill:#EEF2F5; }
-  .ft__brand .brand__mark rect.m-T{ fill:var(--teal-bright); }
-  .ft__brand .brand__mark rect.m-S{ fill:rgba(255,255,255,.45); }
-  .ft__brand .brand__mark rect.m-G{ fill:var(--gold-bright); }
+  .brand__mark{ flex:none; width:44px; height:48px; }
+  /* Dark cells (diamonds) sample a navy->teal gradient; light cells (squares) sample a slate->pale-teal gradient; gold star is flat. */
+  .brand__mark stop.gd0{ stop-color:var(--navy); } .brand__mark stop.gd1{ stop-color:var(--teal); }
+  .brand__mark stop.gl0{ stop-color:#8a9bb0; } .brand__mark stop.gl1{ stop-color:#84b8b5; }
+  .brand__mark .m-G{ fill:var(--gold); }
+  header.nav:not(.solid) .brand__mark stop.gd0{ stop-color:#fff; } header.nav:not(.solid) .brand__mark stop.gd1{ stop-color:var(--teal-bright); }
+  header.nav:not(.solid) .brand__mark stop.gl0{ stop-color:rgba(255,255,255,.55); } header.nav:not(.solid) .brand__mark stop.gl1{ stop-color:rgba(255,255,255,.8); }
+  header.nav:not(.solid) .brand__mark .m-G{ fill:var(--gold-bright); }
+  .ft__brand .brand__mark stop.gd0{ stop-color:#EEF2F5; } .ft__brand .brand__mark stop.gd1{ stop-color:var(--teal-bright); }
+  .ft__brand .brand__mark stop.gl0{ stop-color:rgba(255,255,255,.45); } .ft__brand .brand__mark stop.gl1{ stop-color:rgba(255,255,255,.7); }
+  .ft__brand .brand__mark .m-G{ fill:var(--gold-bright); }
   .brand__word{ display:flex; flex-direction:column; line-height:1; }
   .brand__line{ font-weight:800; font-size:15px; letter-spacing:.005em; line-height:1.16; text-transform:uppercase; transition:color .3s var(--ease); }
   .brand__line.navy{ color:var(--navy); } .brand__line.teal{ color:var(--teal); }
@@ -327,7 +328,7 @@
   .reveal.in{ opacity:1; transform:none; }
   .reveal.d1{ transition-delay:.08s; } .reveal.d2{ transition-delay:.16s; } .reveal.d3{ transition-delay:.24s; } .reveal.d4{ transition-delay:.32s; } .reveal.d5{ transition-delay:.40s; }
   /* animated logo reveal */
-  #mark-header svg rect{ transform-box:fill-box; transform-origin:center; opacity:0; animation:markIn .5s var(--ease) forwards; }
+  #mark-header svg rect, #mark-header svg polygon{ transform-box:fill-box; transform-origin:center; opacity:0; animation:markIn .5s var(--ease) forwards; }
   @keyframes markIn{ from{ opacity:0; transform:scale(.35); } to{ opacity:1; transform:scale(1); } }
 
   /* ===================== RESPONSIVE ===================== */
@@ -366,7 +367,7 @@
     *{ animation:none !important; scroll-behavior:auto; }
     .reveal{ opacity:1; transform:none; transition:none; }
     .scroll-cue{ display:none; } .hero__bg img{ transform:none; }
-    #mark-header svg rect{ opacity:1; }
+    #mark-header svg rect, #mark-header svg polygon{ opacity:1; }
   }
 
   .skip{ position:fixed; left:12px; top:-60px; background:#fff; color:var(--navy); padding:10px 16px; z-index:100; transition:top .2s var(--ease); }
@@ -692,36 +693,53 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var lang = 'en';
 
-  /* ---------- dot-mosaic logo (radial halftone) + staggered reveal ---------- */
-  /* Michigan two-peninsula dot-mosaic. Cells: N navy, T teal, S slate, G gold star, . empty.
-     Fills are set by CSS classes (m-N/m-T/m-S/m-G) so the mark recolors per background. */
+  /* ---------- dot-mosaic logo + staggered reveal ---------- */
+  /* Michigan two-peninsula dot-mosaic, traced from the brand's master vector artwork.
+     X = a normal cell (diamond if (row+col) is even, square if odd); each diamond samples
+     a navy->teal vertical gradient and each square a slate->pale-teal gradient (matching the
+     source file's per-shape gradient fills). G = the single gold star accent (breaks the
+     checkerboard on purpose in the source art). Gradient stops + gold fill are CSS-driven
+     (see .brand__mark rules) so the mark recolors per background context. */
   function buildMark(el, animate){
     if(!el) return;
     var MAP = [
-      "..NSNS......",
-      "..SNSNS.....",
-      "...SNSNS....",
-      ".....NSN....",
-      "....NSTSN...",
-      "...SNTSTN...",
-      "...NTSTN.N..",
-      "...TSTNS.N..",
-      "...STNTS.S..",
-      "...TSTNST...",
-      "...STNTG....",
-      "....TSTS....",
-      "....STT.....",
-      ".....TT....."
+      "XXXX.......",
+      "XXXXXXX....",
+      ".XXXXXXXX..",
+      "......XX...",
+      ".....XXXX..",
+      ".....XXXX.X",
+      "....XXXXXXX",
+      "....XXXXXXX",
+      "....XXXXXXX",
+      "....XXXXXX.",
+      "....XXXXXG.",
+      "....XXXXXX."
     ];
-    var cols=12, cell=6, gap=0.9, sq=cell-gap, rows=MAP.length;
-    var svg='<svg viewBox="0 0 '+(cols*cell)+' '+(rows*cell)+'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">';
+    var cols=11, cell=6, gap=0.9, sq=cell-gap, rows=MAP.length;
+    var gid=(el.id||'m')+'-g';
+    function star(cx,cy,rOuter,rInner,delay){
+      var pts=[];
+      for(var i=0;i<16;i++){
+        var ang=-Math.PI/2+i*Math.PI/8, r=(i%2===0)?rOuter:rInner;
+        pts.push((cx+r*Math.cos(ang)).toFixed(2)+','+(cy+r*Math.sin(ang)).toFixed(2));
+      }
+      return '<polygon class="m-G"'+delay+' points="'+pts.join(' ')+'"/>';
+    }
+    var svg='<svg viewBox="0 0 '+(cols*cell)+' '+(rows*cell)+'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">'
+      +'<defs>'
+      +'<linearGradient id="'+gid+'d" x1="0" y1="0" x2="0" y2="'+(rows*cell)+'" gradientUnits="userSpaceOnUse"><stop class="gd0" offset="0"/><stop class="gd1" offset="1"/></linearGradient>'
+      +'<linearGradient id="'+gid+'l" x1="0" y1="0" x2="0" y2="'+(rows*cell)+'" gradientUnits="userSpaceOnUse"><stop class="gl0" offset="0"/><stop class="gl1" offset="1"/></linearGradient>'
+      +'</defs>';
     for(var r=0;r<rows;r++){ for(var c=0;c<cols;c++){
       var ch=MAP[r].charAt(c); if(ch==='.'||ch==='') continue;
       var x=c*cell+gap/2, y=r*cell+gap/2, cx=x+sq/2, cy=y+sq/2;
-      var diamond=(r+c)%2===0;
       var delay=animate?' style="animation-delay:'+((r+c)*0.028).toFixed(3)+'s"':'';
+      if(ch==='G'){ svg+=star(cx,cy,sq*0.62,sq*0.30,delay); continue; }
+      var diamond=(r+c)%2===0;
       var rot=diamond?' transform="rotate(45 '+cx.toFixed(2)+' '+cy.toFixed(2)+')"':'';
-      svg+='<rect class="m-'+ch+'" x="'+x.toFixed(2)+'" y="'+y.toFixed(2)+'" width="'+sq.toFixed(2)+'" height="'+sq.toFixed(2)+'" rx="0.6"'+rot+delay+'/>';
+      var fill=diamond?'url(#'+gid+'d)':'url(#'+gid+'l)';
+      svg+='<rect fill="'+fill+'" x="'+x.toFixed(2)+'" y="'+y.toFixed(2)+'" width="'+sq.toFixed(2)+'" height="'+sq.toFixed(2)+'" rx="0.6"'+rot+delay+'/>';
     }}
     el.innerHTML=svg+'</svg>';
   }
