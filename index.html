@@ -328,8 +328,9 @@
   .reveal.in{ opacity:1; transform:none; }
   .reveal.d1{ transition-delay:.08s; } .reveal.d2{ transition-delay:.16s; } .reveal.d3{ transition-delay:.24s; } .reveal.d4{ transition-delay:.32s; } .reveal.d5{ transition-delay:.40s; }
   /* animated logo reveal */
-  #mark-header svg rect, #mark-header svg polygon{ transform-box:fill-box; transform-origin:center; opacity:0; animation:markIn .5s var(--ease) forwards; }
-  @keyframes markIn{ from{ opacity:0; transform:scale(.35); } to{ opacity:1; transform:scale(1); } }
+  .brand__mark rect, .brand__mark polygon{ transform-box:fill-box; transform-origin:center; }
+  #mark-header svg rect, #mark-header svg polygon{ opacity:0; animation:markIn .5s var(--ease) forwards; }
+  @keyframes markIn{ from{ opacity:0; transform:scale(.35) rotate(var(--r,0deg)); } to{ opacity:1; transform:scale(1) rotate(var(--r,0deg)); } }
 
   /* ===================== RESPONSIVE ===================== */
   @media (max-width:1000px){
@@ -367,7 +368,7 @@
     *{ animation:none !important; scroll-behavior:auto; }
     .reveal{ opacity:1; transform:none; transition:none; }
     .scroll-cue{ display:none; } .hero__bg img{ transform:none; }
-    #mark-header svg rect, #mark-header svg polygon{ opacity:1; }
+    #mark-header svg rect, #mark-header svg polygon{ opacity:1; transform:rotate(var(--r,0deg)); }
   }
 
   .skip{ position:fixed; left:12px; top:-60px; background:#fff; color:var(--navy); padding:10px 16px; z-index:100; transition:top .2s var(--ease); }
@@ -734,12 +735,17 @@
     for(var r=0;r<rows;r++){ for(var c=0;c<cols;c++){
       var ch=MAP[r].charAt(c); if(ch==='.'||ch==='') continue;
       var x=c*cell+gap/2, y=r*cell+gap/2, cx=x+sq/2, cy=y+sq/2;
-      var delay=animate?' style="animation-delay:'+((r+c)*0.028).toFixed(3)+'s"':'';
+      var delayDecl=animate?'animation-delay:'+((r+c)*0.028).toFixed(3)+'s;':'';
+      var delay=delayDecl?' style="'+delayDecl+'"':'';
       if(ch==='G'){ svg+=star(cx,cy,sq*0.62,sq*0.30,delay); continue; }
       var diamond=(r+c)%2===0;
-      var rot=diamond?' transform="rotate(45 '+cx.toFixed(2)+' '+cy.toFixed(2)+')"':'';
+      /* rotation goes through a CSS custom property + transform:rotate(var(--r)), NOT the SVG
+         transform attribute: the entrance animation sets a CSS `transform` (scale) on this same
+         element, and CSS transform always wins over the presentation attribute, silently
+         discarding an attribute-based rotate. Routing through --r keeps it alive through the animation. */
+      var style=diamond?' style="--r:45deg;transform:rotate(var(--r));'+delayDecl+'"':delay;
       var fill=diamond?'url(#'+gid+'d)':'url(#'+gid+'l)';
-      svg+='<rect fill="'+fill+'" x="'+x.toFixed(2)+'" y="'+y.toFixed(2)+'" width="'+sq.toFixed(2)+'" height="'+sq.toFixed(2)+'" rx="0.6"'+rot+delay+'/>';
+      svg+='<rect fill="'+fill+'" x="'+x.toFixed(2)+'" y="'+y.toFixed(2)+'" width="'+sq.toFixed(2)+'" height="'+sq.toFixed(2)+'" rx="0.6"'+style+'/>';
     }}
     el.innerHTML=svg+'</svg>';
   }
