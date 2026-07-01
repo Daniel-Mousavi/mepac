@@ -697,7 +697,7 @@
   function buildMark(el, animate){
     if(!el) return;
     var MAP = [
-      "..NSN.......",
+      "..NSNS......",
       "..SNSNS.....",
       "...SNSNS....",
       ".....NSN....",
@@ -716,9 +716,11 @@
     var svg='<svg viewBox="0 0 '+(cols*cell)+' '+(rows*cell)+'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">';
     for(var r=0;r<rows;r++){ for(var c=0;c<cols;c++){
       var ch=MAP[r].charAt(c); if(ch==='.'||ch==='') continue;
-      var x=c*cell+gap/2, y=r*cell+gap/2;
+      var x=c*cell+gap/2, y=r*cell+gap/2, cx=x+sq/2, cy=y+sq/2;
+      var diamond=(r+c)%2===0;
       var delay=animate?' style="animation-delay:'+((r+c)*0.028).toFixed(3)+'s"':'';
-      svg+='<rect class="m-'+ch+'" x="'+x.toFixed(2)+'" y="'+y.toFixed(2)+'" width="'+sq.toFixed(2)+'" height="'+sq.toFixed(2)+'" rx="0.6"'+delay+'/>';
+      var rot=diamond?' transform="rotate(45 '+cx.toFixed(2)+' '+cy.toFixed(2)+')"':'';
+      svg+='<rect class="m-'+ch+'" x="'+x.toFixed(2)+'" y="'+y.toFixed(2)+'" width="'+sq.toFixed(2)+'" height="'+sq.toFixed(2)+'" rx="0.6"'+rot+delay+'/>';
     }}
     el.innerHTML=svg+'</svg>';
   }
